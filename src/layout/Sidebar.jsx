@@ -18,6 +18,7 @@ const navItems = [
         id: "queue",
         to: "#", 
         label: "Queue",
+        badge: 2,
     },
     { 
         id: "consultation",
@@ -37,7 +38,8 @@ const navItems = [
     {
         id: "appointment",
         to: "#",
-        label: "Appointment"
+        label: "Appointment",
+        badge: 5,
     },
     {
         id: "settings",
@@ -85,7 +87,7 @@ export default function Sidebar() {
 
             {/* navigation sidebar */}
             <nav className="flex flex-col flex-1 p-2 space-y-1">
-                {navItems.map(({ id, to, label }) => (
+                {navItems.map(({ id, to, label, badge }) => (
                     <NavLink
                         key={id}
                         to={to}
@@ -99,6 +101,11 @@ export default function Sidebar() {
                         }
                     >
                         <span>{label}</span>
+                        {badge != null && (
+                            <span className="min-w-[20px] h-5 px-1.5 flex items-center justify-center rounded-full bg-red-500 text-white text-xs font-semibold">
+                                {badge}
+                            </span>
+                        )}
                     </NavLink>
                 ))}
             </nav>

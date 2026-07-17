@@ -1,9 +1,12 @@
-import { HiDotsHorizontal } from "react-icons/hi";
+import { HiDotsHorizontal, HiChevronLeft, HiChevronRight } from "react-icons/hi";
+import { useState } from "react";
 import ReactWorldFlags from 'react-world-flags';
 
 const Flag = ReactWorldFlags.default || ReactWorldFlags;
 
 const Table = () => {
+    const [currentPage, setCurrentPage] = useState(1);
+
     const countryCodes = {
         "MY": "+60",
         "US": "+1",
@@ -13,6 +16,8 @@ const Table = () => {
         "AU": "+61",
         "JP": "+81",
         "CH": "+86",
+        "ID": "+62",
+        "PH": "+63",
     };
 
     // table header
@@ -91,10 +96,41 @@ const Table = () => {
             datetime: "17 Jul 2026, 14:20",
             status: "1",
         },
+        {
+            id: 6,
+            name: "Aditya Pratama",
+            avatar: "/avatar-3.png",
+            contact: "16-222 5555",
+            nationality: "Indonesia",
+            flag: "ID",
+            datetime: "17 Jul 2026, 14:20",
+            status: "2",
+        },
+        {
+            id: 7,
+            name: "Kathryn Bernado",
+            contact: "7754545151",
+            nationality: " Philippines",
+            flag: "PH",
+            datetime: "20 Jul 2026, 14:20",
+            status: "1",
+        },
     ];
+
+    // pagination
+    const PAGE_SIZE = 5;
+    const totalPages = Math.ceil(patients.length / PAGE_SIZE);
+    const startIndex = (currentPage - 1) * PAGE_SIZE;
+    const paginatedPatients = patients.slice(startIndex, startIndex + PAGE_SIZE);
+
+    const goToPage = (page) => {
+        if (page < 1 || page > totalPages) return;
+        setCurrentPage(page);
+    };
 
     return (
         <div className="relative overflow-x-auto bg-neutral-primary-soft shadow-xs rounded-base border border-default">
+            {/* patient table */}
             <table className="w-full text-sm text-left rtl:text-right text-body">
                 <thead className="text-sm text-body bg-neutral-secondary-medium border-b border-default-medium">
                     <tr>
@@ -110,7 +146,7 @@ const Table = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    {patients.map((patient) => (
+                    {paginatedPatients.map((patient) => (
                         <tr key={patient.id} className="bg-neutral-primary-soft border-b border-default hover:bg-neutral-secondary-medium">
                             <th scope="row" className="px-2 py-2 font-medium text-heading whitespace-nowrap">
                                 <img
@@ -147,6 +183,47 @@ const Table = () => {
                     ))}
                 </tbody>
             </table>
+
+            {/* pagination footer */}
+            <div className="flex items-center justify-between px-4 py-3 border-t border-gray-200">
+                <span className="text-sm text-gray-600">
+                    Showing {startIndex + 1}–{Math.min(startIndex + PAGE_SIZE, patients.length)} of {patients.length}
+                </span>
+
+                <div className="flex items-center gap-1">
+                    <button
+                        onClick={() => goToPage(currentPage - 1)}
+                        disabled={currentPage === 1}
+                        className="p-1.5 rounded-lg text-gray-500 hover:bg-gray-100 disabled:opacity-40 disabled:hover:bg-transparent transition"
+                        aria-label="Previous page"
+                    >
+                        <HiChevronLeft size={18} />
+                    </button>
+
+                    {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+                        <button
+                            key={page}
+                            onClick={() => goToPage(page)}
+                            className={`w-8 h-8 rounded-lg text-sm transition ${
+                                page === currentPage
+                                    ? "bg-[#0052CC] text-white font-medium"
+                                    : "text-gray-600 hover:bg-gray-100"
+                            }`}
+                        >
+                            {page}
+                        </button>
+                    ))}
+
+                    <button
+                        onClick={() => goToPage(currentPage + 1)}
+                        disabled={currentPage === totalPages}
+                        className="p-1.5 rounded-lg text-gray-500 hover:bg-gray-100 disabled:opacity-40 disabled:hover:bg-transparent transition"
+                        aria-label="Next page"
+                    >
+                        <HiChevronRight size={18} />
+                    </button>
+                </div>
+            </div>
         </div>
     );
 }

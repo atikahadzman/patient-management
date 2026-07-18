@@ -50,11 +50,11 @@ const Panel = ({ patient, isOpen, onClose }) => {
                     {/* name, badge */}
                     <div className="mt-6 mb-2">
                         <div className="flex items-center gap-2">
-                            <h5 className="text-2xl font-semibold tracking-tight text-heading">
+                            <h5 className="text-[24px] font-semibold tracking-tight text-heading">
                                 {patient.name}
                             </h5>
                             <div
-                                className={`w-fit rounded-md px-2 py-1 text-sm font-semibold whitespace-nowrap ${
+                                className={`w-fit rounded-md px-2 py-1 text-[14px] font-semibold whitespace-nowrap ${
                                     patient.status === "1"
                                         ? "bg-[#FFD700] text-yellow-900"
                                         : "bg-sky-400 text-sky-900"
@@ -66,19 +66,60 @@ const Panel = ({ patient, isOpen, onClose }) => {
                     </div>
 
                     {/* nationality and flag */}
-                    <div className="flex items-center gap-2 text-sm text-gray-700 mt-4">
+                    <div className="flex items-center gap-2 text-[14px] text-gray-700 mt-4">
+                        <p className="font-bold">
+                            Nationality:
+                        </p>
                         {patient.nationality}
                         <Flag code={patient.flag} style={{ width: 24, height: 18 }} />
                     </div>
 
                     {/* contact */}
-                    <div className="flex items-center gap-2 text-sm text-gray-700 mt-2">
+                    <div className="flex items-center gap-2 text-[14px] text-gray-700 mt-2">
+                        <p className="font-bold">
+                            Contact Number:
+                        </p>
                         <span>{countryCodes[patient.flag]}</span> {patient.contact}
                     </div>
 
+                    {/* email */}
+                    <div className="flex items-center gap-2 text-[14px] text-gray-700 mt-2">
+                        <p className="font-bold">
+                            Email:
+                        </p>
+                        {patient.email}
+                    </div>
+
+                    {/* birthdate + age */}
+                    <div className="flex items-center gap-2 text-[14px] text-gray-700 mt-2">
+                        <p className="font-bold">
+                            Birthdate (Age):
+                        </p>
+                        {patient.birthdate}
+                    </div>
+
+                    {/* occupation */}
+                    <div className="flex items-center gap-2 text-[14px] text-gray-700 mt-2">
+                        <p className="font-bold">
+                            Occupation:
+                        </p>
+                        <span>{patient.occupation}</span>
+                    </div>
+
                     {/* datetime */}
-                    <div className="flex items-center gap-2 text-sm text-gray-700 mt-2">
+                    <div className="flex items-center gap-2 text-[14px] text-gray-700 mt-2">
+                        <p className="font-bold">
+                            Last visit date:
+                        </p>
                         <span>{patient.datetime}</span>
+                    </div>
+
+                    {/* medical remark */}
+                    <div className="flex items-center gap-2 text-[14px] text-gray-700 mt-2">
+                        <p className="font-bold">
+                            Medical Remark:
+                        </p>
+                        <span>{patient.remark}</span>
                     </div>
                 </>
             )}

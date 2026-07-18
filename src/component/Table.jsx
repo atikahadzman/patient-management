@@ -1,4 +1,4 @@
-import { HiDotsHorizontal, HiChevronLeft, HiChevronRight } from "react-icons/hi";
+import { HiDotsHorizontal, HiDotsVertical, HiChevronLeft, HiChevronRight } from "react-icons/hi";
 import { useState } from "react";
 import ReactWorldFlags from 'react-world-flags';
 
@@ -129,10 +129,10 @@ const Table = () => {
     };
 
     return (
-        <div className="relative overflow-x-auto bg-neutral-primary-soft shadow-xs rounded-base border border-default">
+        <div className="overflow-x-auto bg-neutral-primary-soft shadow-xs rounded-base">
             {/* patient table */}
             <table className="w-full text-sm text-left rtl:text-right text-body">
-                <thead className="text-sm text-body bg-neutral-secondary-medium border-b border-default-medium">
+                <thead className="text-sm text-body bg-neutral-secondary-medium border border-0.5">
                     <tr>
                         {tableHeader.map((col) => (
                             <th
@@ -147,25 +147,44 @@ const Table = () => {
                 </thead>
                 <tbody>
                     {paginatedPatients.map((patient) => (
-                        <tr key={patient.id} className="bg-neutral-primary-soft border-b border-default hover:bg-neutral-secondary-medium">
+                        <tr
+                            key={patient.id}
+                            className="odd:bg-white even:bg-gray-50 border-b border-gray-100 last:border-0 hover:bg-gray-100 transition"
+                        >
                             <th scope="row" className="px-2 py-2 font-medium text-heading whitespace-nowrap">
-                                <img
-                                    src={patient.avatar || "/default-avatar.jpg"}
-                                    className="w-30 h-30 object-cover rounded-2xl p-2 hover:translate-x-1 transition-transform"
-                                    alt={patient.name}
-                                    loading="lazy"
-                                />
-                                <span>{patient.name}</span>
+                                {/* mobile */}
+                                <div className="flex md:hidden flex-col items-center gap-1 text-sm text-gray-600">
+                                    <img
+                                        src={patient.avatar || "/default-avatar.jpg"}
+                                        className="w-30 h-30 object-cover rounded-2xl p-2 hover:translate-x-1 transition-transform"
+                                        alt={patient.name}
+                                        loading="lazy"
+                                        />
+                                    <span>{patient.name}</span>
+                                </div>
+
+                                {/* desktop */}
+                                <div className="hidden md:flex items-center gap-2 text-sm text-gray-600">
+                                    <img
+                                        src={patient.avatar || "/default-avatar.jpg"}
+                                        className="w-30 h-30 object-cover rounded-2xl p-2 hover:translate-x-1 transition-transform"
+                                        alt={patient.name}
+                                        loading="lazy"
+                                        />
+                                    <span>{patient.name}</span>
+                                </div>
                             </th>
                             <td className="px-2 py-2">
                                 <span>{countryCodes[patient.flag]}</span> {patient.contact}
                             </td>
                             <td className="px-2 py-2">
-                                {patient.nationality}
-                                <Flag
-                                    code={patient.flag}
-                                    style={{ width: 30, height: 30 }}
-                                />
+                                <div className="flex items-center gap-2 text-sm text-gray-600">
+                                    {patient.nationality}
+                                    <Flag
+                                        code={patient.flag}
+                                        style={{ width: 30, height: 30 }}
+                                    />
+                                </div>
                             </td>
                             <td className="px-2 py-2">
                                 {patient.datetime}

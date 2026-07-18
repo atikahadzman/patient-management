@@ -1,6 +1,7 @@
 import { HiDotsHorizontal, HiDotsVertical, HiChevronLeft, HiChevronRight } from "react-icons/hi";
 import { useState } from "react";
 import ReactWorldFlags from 'react-world-flags';
+import Panel from "./Panel";
 
 const Flag = ReactWorldFlags.default || ReactWorldFlags;
 
@@ -132,6 +133,15 @@ const Table = () => {
         setCurrentPage(page);
     };
 
+    // panel section
+    const [selectedPatient, setSelectedPatient] = useState(null);
+    const [isPanelOpen, setIsPanelOpen] = useState(false);
+    const openPanel = (patient) => {
+        setSelectedPatient(patient);
+        setIsPanelOpen(true);
+    };
+    const closePanel = () => setIsPanelOpen(false);
+
     return (
         <div className="overflow-x-auto bg-neutral-primary-soft shadow-xs rounded-base">
 
@@ -161,6 +171,7 @@ const Table = () => {
                                 <tr
                                     key={patient.id || index}
                                     className="odd:bg-white even:bg-[#F8F9FA] border-b border-[#E5E5E5] last:border-0 hover:bg-gray-100 transition"
+                                    onClick={() => openPanel(patient)}
                                 >
                                     <td className="px-2 py-2 text-[12px] text-gray-500">
                                         {startIndex + index + 1}
@@ -216,6 +227,13 @@ const Table = () => {
                             ))}
                         </tbody>
                     </table>
+                    
+                    {/* slide in patient panel */}
+                    <Panel
+                        patient={selectedPatient}
+                        isOpen={isPanelOpen}
+                        onClose={closePanel}
+                    />
 
                     {/* pagination footer */}
                     <div className="flex items-center justify-between px-4 py-3 border-t border-[#E5E5E5]">

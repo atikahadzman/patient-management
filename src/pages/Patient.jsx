@@ -1,4 +1,5 @@
 import Table from '../component/Table';
+import Appointment from '../component/Appointment';
 
 const Patient = () => {
     return (
@@ -7,6 +8,7 @@ const Patient = () => {
                 List of Patient
             </h3>
             
+            <Appointment />
             <Table />
         </div>
     );

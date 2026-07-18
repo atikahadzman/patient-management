@@ -134,122 +134,131 @@ const Table = () => {
 
     return (
         <div className="overflow-x-auto bg-neutral-primary-soft shadow-xs rounded-base">
-            {/* patient table */}
-            <table className="w-full text-left rtl:text-right text-body">
-                <thead className="text-[14px] text-body bg-neutral-secondary-medium border border-0.5">
-                    <tr>
-                        {tableHeader.map((col) => (
-                            <th
-                                key={col.key}
-                                scope="col"
-                                className="px-6 py-3 font-medium"
-                            >
-                                {col.label}
-                            </th>
-                        ))}
-                    </tr>
-                </thead>
-                <tbody>
-                    {paginatedPatients.map((patient, index) => (
-                        <tr
-                            key={patient.id || index}
-                            className="odd:bg-white even:bg-[#F8F9FA] border-b border-[#E5E5E5] last:border-0 hover:bg-gray-100 transition"
-                        >
-                            <td className="px-2 py-2">
-                                 {startIndex + index + 1}
-                            </td>
-                            <th scope="row" className="px-2 py-2 font-regular text-heading whitespace-nowrap">
-                                {/* mobile */}
-                                <div className="flex md:hidden flex-col items-center gap-1 text-sm text-gray-600">
-                                    <img
-                                        src={patient.avatar || "/default-avatar.jpg"}
-                                        className="w-30 h-30 object-cover rounded-2xl p-2 hover:translate-x-1 transition-transform"
-                                        alt={patient.name}
-                                        loading="lazy"
-                                        />
-                                    <span>{patient.name}</span>
-                                </div>
 
-                                {/* desktop */}
-                                <div className="hidden md:flex items-center gap-2 text-sm text-gray-600">
-                                    <img
-                                        src={patient.avatar || "/default-avatar.jpg"}
-                                        className="w-30 h-30 object-cover rounded-2xl p-2 hover:translate-x-1 transition-transform"
-                                        alt={patient.name}
-                                        loading="lazy"
-                                        />
-                                    <span>{patient.name}</span>
-                                </div>
-                            </th>
-                            <td className="px-2 py-2">
-                                <span>{countryCodes[patient.flag]}</span> {patient.contact}
-                            </td>
-                            <td className="px-2 py-2">
-                                <div className="flex items-center gap-2 text-sm text-gray-600">
-                                    {patient.nationality}
-                                    <Flag
-                                        code={patient.flag}
-                                        style={{ width: 30, height: 30 }}
-                                    />
-                                </div>
-                            </td>
-                            <td className="px-2 py-2">
-                                {patient.datetime}
-                            </td>
-                            <td className="px-2 py-2">
-                                <div className={`w-fit rounded-md px-2 py-1 text-sm font-semibold whitespace-nowrap ${
-                                    patient.status === "1"
-                                        ? "bg-[#FFD700] text-yellow-900"
-                                        : "bg-sky-400 text-sky-900"
-                                    }`}>
-                                    {patient.status === "1" ? "VIP" : "Non-VIP"}
-                                </div>
-                            </td>
-                        </tr>
-                    ))}
-                </tbody>
-            </table>
-
-            {/* pagination footer */}
-            <div className="flex items-center justify-between px-4 py-3 border-t border-[#E5E5E5]">
-                <span className="text-sm text-gray-600">
-                    Showing {startIndex + 1}–{Math.min(startIndex + PAGE_SIZE, patients.length)} of {patients.length}
-                </span>
-
-                <div className="flex items-center gap-1">
-                    <button
-                        onClick={() => goToPage(currentPage - 1)}
-                        disabled={currentPage === 1}
-                        className="p-1.5 rounded-lg text-gray-500 hover:bg-gray-100 disabled:opacity-40 disabled:hover:bg-transparent transition"
-                        aria-label="Previous page"
-                    >
-                        <HiChevronLeft size={18} />
-                    </button>
-
-                    {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
-                        <button
-                            key={page}
-                            onClick={() => goToPage(page)}
-                            className={`w-8 h-8 rounded-lg text-sm transition ${
-                                page === currentPage
-                                    ? "bg-[#0052CC] text-white font-regular"
-                                    : "text-gray-600 hover:bg-gray-100"
-                            }`}
-                        >
-                            {page}
-                        </button>
-                    ))}
-
-                    <button
-                        onClick={() => goToPage(currentPage + 1)}
-                        disabled={currentPage === totalPages}
-                        className="p-1.5 rounded-lg text-gray-500 hover:bg-gray-100 disabled:opacity-40 disabled:hover:bg-transparent transition"
-                        aria-label="Next page"
-                    >
-                        <HiChevronRight size={18} />
-                    </button>
+            {paginatedPatients.length === 0 ? (
+                <div className="text-center py-24 font-poppins font-semibold">
+                    Ops, it's empty here
                 </div>
-            </div>
+            ) : (
+                <>
+                    {/* patient table */}
+                    <table className="w-full text-left rtl:text-right text-body">
+                        <thead className="text-[14px] text-body bg-neutral-secondary-medium border border-0.5">
+                            <tr>
+                                {tableHeader.map((col) => (
+                                    <th
+                                        key={col.key}
+                                        scope="col"
+                                        className="px-6 py-3 font-medium"
+                                    >
+                                        {col.label}
+                                    </th>
+                                ))}
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {paginatedPatients.map((patient, index) => (
+                                <tr
+                                    key={patient.id || index}
+                                    className="odd:bg-white even:bg-[#F8F9FA] border-b border-[#E5E5E5] last:border-0 hover:bg-gray-100 transition"
+                                >
+                                    <td className="px-2 py-2 text-[12px] text-gray-500">
+                                        {startIndex + index + 1}
+                                    </td>
+                                    <th scope="row" className="px-2 py-2 font-regular text-heading whitespace-nowrap">
+                                        {/* mobile */}
+                                        <div className="flex md:hidden flex-col items-center gap-1 text-sm text-gray-600">
+                                            <img
+                                                src={patient.avatar || "/default-avatar.jpg"}
+                                                className="w-30 h-30 object-cover rounded-2xl p-2 hover:translate-x-1 transition-transform"
+                                                alt={patient.name}
+                                                loading="lazy"
+                                                />
+                                            <span>{patient.name}</span>
+                                        </div>
+
+                                        {/* desktop */}
+                                        <div className="hidden md:flex items-center gap-2 text-sm text-gray-600">
+                                            <img
+                                                src={patient.avatar || "/default-avatar.jpg"}
+                                                className="w-30 h-30 object-cover rounded-2xl p-2 hover:translate-x-1 transition-transform"
+                                                alt={patient.name}
+                                                loading="lazy"
+                                                />
+                                            <span>{patient.name}</span>
+                                        </div>
+                                    </th>
+                                    <td className="px-2 py-2">
+                                        <span>{countryCodes[patient.flag]}</span> {patient.contact}
+                                    </td>
+                                    <td className="px-2 py-2">
+                                        <div className="flex items-center gap-2 text-sm text-gray-600">
+                                            {patient.nationality}
+                                            <Flag
+                                                code={patient.flag}
+                                                style={{ width: 30, height: 30 }}
+                                            />
+                                        </div>
+                                    </td>
+                                    <td className="px-2 py-2">
+                                        {patient.datetime}
+                                    </td>
+                                    <td className="px-2 py-2">
+                                        <div className={`w-fit rounded-md px-2 py-1 text-sm font-semibold whitespace-nowrap ${
+                                            patient.status === "1"
+                                                ? "bg-[#FFD700] text-yellow-900"
+                                                : "bg-sky-400 text-sky-900"
+                                            }`}>
+                                            {patient.status === "1" ? "VIP" : "Non-VIP"}
+                                        </div>
+                                    </td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+
+                    {/* pagination footer */}
+                    <div className="flex items-center justify-between px-4 py-3 border-t border-[#E5E5E5]">
+                        <span className="text-sm text-gray-600">
+                            Showing {startIndex + 1}–{Math.min(startIndex + PAGE_SIZE, patients.length)} of {patients.length}
+                        </span>
+
+                        <div className="flex items-center gap-1">
+                            <button
+                                onClick={() => goToPage(currentPage - 1)}
+                                disabled={currentPage === 1}
+                                className="p-1.5 rounded-lg text-gray-500 hover:bg-gray-100 disabled:opacity-40 disabled:hover:bg-transparent transition"
+                                aria-label="Previous page"
+                            >
+                                <HiChevronLeft size={18} />
+                            </button>
+
+                            {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+                                <button
+                                    key={page}
+                                    onClick={() => goToPage(page)}
+                                    className={`w-8 h-8 rounded-lg text-sm transition ${
+                                        page === currentPage
+                                            ? "bg-[#0052CC] text-white font-regular"
+                                            : "text-gray-600 hover:bg-gray-100"
+                                    }`}
+                                >
+                                    {page}
+                                </button>
+                            ))}
+
+                            <button
+                                onClick={() => goToPage(currentPage + 1)}
+                                disabled={currentPage === totalPages}
+                                className="p-1.5 rounded-lg text-gray-500 hover:bg-gray-100 disabled:opacity-40 disabled:hover:bg-transparent transition"
+                                aria-label="Next page"
+                            >
+                                <HiChevronRight size={18} />
+                            </button>
+                        </div>
+                    </div>
+                </>
+            )}
         </div>
     );
 }

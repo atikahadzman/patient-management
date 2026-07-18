@@ -23,6 +23,10 @@ const Table = () => {
     // table header
     const tableHeader = [
         { 
+            key: "id", 
+            label: "ID" 
+        },
+        { 
             key: "patient", 
             label: "Patient Name" 
         },
@@ -131,8 +135,8 @@ const Table = () => {
     return (
         <div className="overflow-x-auto bg-neutral-primary-soft shadow-xs rounded-base">
             {/* patient table */}
-            <table className="w-full text-sm text-left rtl:text-right text-body">
-                <thead className="text-sm text-body bg-neutral-secondary-medium border border-0.5">
+            <table className="w-full text-left rtl:text-right text-body">
+                <thead className="text-[14px] text-body bg-neutral-secondary-medium border border-0.5">
                     <tr>
                         {tableHeader.map((col) => (
                             <th
@@ -146,12 +150,15 @@ const Table = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    {paginatedPatients.map((patient) => (
+                    {paginatedPatients.map((patient, index) => (
                         <tr
-                            key={patient.id}
-                            className="odd:bg-white even:bg-gray-50 border-b border-gray-100 last:border-0 hover:bg-gray-100 transition"
+                            key={patient.id || index}
+                            className="odd:bg-white even:bg-[#F8F9FA] border-b border-[#E5E5E5] last:border-0 hover:bg-gray-100 transition"
                         >
-                            <th scope="row" className="px-2 py-2 font-medium text-heading whitespace-nowrap">
+                            <td className="px-2 py-2">
+                                 {startIndex + index + 1}
+                            </td>
+                            <th scope="row" className="px-2 py-2 font-regular text-heading whitespace-nowrap">
                                 {/* mobile */}
                                 <div className="flex md:hidden flex-col items-center gap-1 text-sm text-gray-600">
                                     <img
@@ -190,9 +197,9 @@ const Table = () => {
                                 {patient.datetime}
                             </td>
                             <td className="px-2 py-2">
-                                <div className={`w-fit rounded-md px-2 py-1 text-xs font-semibold whitespace-nowrap ${
+                                <div className={`w-fit rounded-md px-2 py-1 text-sm font-semibold whitespace-nowrap ${
                                     patient.status === "1"
-                                        ? "bg-rose-400 text-rose-900"
+                                        ? "bg-[#FFD700] text-yellow-900"
                                         : "bg-sky-400 text-sky-900"
                                     }`}>
                                     {patient.status === "1" ? "VIP" : "Non-VIP"}
@@ -204,7 +211,7 @@ const Table = () => {
             </table>
 
             {/* pagination footer */}
-            <div className="flex items-center justify-between px-4 py-3 border-t border-gray-200">
+            <div className="flex items-center justify-between px-4 py-3 border-t border-[#E5E5E5]">
                 <span className="text-sm text-gray-600">
                     Showing {startIndex + 1}–{Math.min(startIndex + PAGE_SIZE, patients.length)} of {patients.length}
                 </span>
@@ -225,7 +232,7 @@ const Table = () => {
                             onClick={() => goToPage(page)}
                             className={`w-8 h-8 rounded-lg text-sm transition ${
                                 page === currentPage
-                                    ? "bg-[#0052CC] text-white font-medium"
+                                    ? "bg-[#0052CC] text-white font-regular"
                                     : "text-gray-600 hover:bg-gray-100"
                             }`}
                         >

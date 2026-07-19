@@ -25,7 +25,18 @@ npm install
 
 ## References
 
+```bash
 World Flags : https://github.com/smucode/react-world-flags
+```
+
+```bash
 Table : https://flowbite.com/docs/components/tables/
-Pagination : https://flowbite.com/docs/components/pagination/
+```
+
+```bash
+Card Component : https://flowbite.com/docs/components/card/
+```
+
+```bash
 Icons library : https://react-icons.github.io/react-icons/icons/hi/
+```

@@ -21,6 +21,8 @@ After clone this repository, you may need to run this command
 ```bash
 npm install
 ```
+## Project Structure
+<img width="1016" height="763" alt="figma-screenshot" src="https://github.com/user-attachments/assets/0b4f51ea-5cdc-41bd-b1a9-24887b1722e4" />
 
 
 ## References
